@@ -7,6 +7,7 @@ this project was started to help bring some technology to bear on the problem.
 
 ## Goals
 The following goals were set for the current version:
+
 * Provide a streamlined way to handle multiple shows, riders, entries and
   results
 * Reduce paperwork by doing much of the data-entry in an app as opposed to
@@ -20,6 +21,7 @@ The following goals were set for the current version:
 
 ## Future
 There are many ways this could be further improved:
+
 * Provide an online means of entering orders thus further streamlining
   the entry process
 * Integrate social network updates where requested
