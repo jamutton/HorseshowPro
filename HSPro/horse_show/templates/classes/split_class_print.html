@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="author" content="James Mutton">
+  <title>{% block title %}Printing Class Documents{% endblock %}</title>
+	<STYLE TYPE="text/css">
+     P.breakhere {page-break-before: always}
+	</STYLE>
+</head>
+
+<body style="font-family:Verdana,Arial,serif;">
+<div>
+	<p><a href="javascript:history.go(-1);">back</a></p>
+{% if sr_ring %}
+	<!-- Build both the judging and gate sheets -->
+
+	<!-- Ring Sheet -->
+	<p>Judging - Class: SENIOR SPLIT {{ cls.Name }}</p>
+	<table border="1" cellpadding="2" cellspacing="0" width="100%">
+		<tr><td>Number</td><td>Placing</td><td>Danish</td><td>Comments</td></tr>
+    {% for row in sr_ring %}
+		<tr>
+			<td>{{ row.0 }}</td>
+			<td>&nbsp;&nbsp;&nbsp;</td>
+			<td>&nbsp;&nbsp;&nbsp;</td>
+			<td width="100%">&nbsp;</td>
+		</tr>
+    {% endfor %}
+	</table>
+
+	<!-- In Gate Sheet -->
+	<p class="breakhere">In Gate - Class: SENIOR SPLIT {{ cls.Name }}</p>
+	<table border="1" cellpadding="2" cellspacing="0" width="100%">
+		<tr><td>Number</td><td>Checkin</td><td>Seat</td></tr>
+	{% for row in sr_ring %}
+		<tr>
+			<td>{{ row.0 }}</td>
+			<td>&nbsp;&nbsp;&nbsp;</td>
+			<td width="100%">&nbsp;&nbsp;&nbsp;</td>
+		</tr>
+	{% endfor %}
+	</table>
+
+{% endif %}
+
+
+
+
+{% if int_ring %}
+	<!-- Build both the judging and gate sheets -->
+
+	<!-- Ring Sheet -->
+	<p class="breakhere">Judging - Class: INTERMEDIATE SPLIT {{ cls.Name }}</p>
+	<table border="1" cellpadding="2" cellspacing="0" width="100%">
+		<tr><td>Number</td><td>Placing</td><td>Danish</td><td>Comments</td></tr>
+    {% for row in int_ring %}
+		<tr>
+			<td>{{ row.0 }}</td>
+			<td>&nbsp;&nbsp;&nbsp;</td>
+			<td>&nbsp;&nbsp;&nbsp;</td>
+			<td width="100%">&nbsp;</td>
+		</tr>
+    {% endfor %}
+	</table>
+
+	<!-- In Gate Sheet -->
+	<p class="breakhere">In Gate - Class: INTERMEDIATE SPLIT  {{ cls.Name }}</p>
+	<table border="1" cellpadding="2" cellspacing="0" width="100%">
+		<tr><td>Number</td><td>Checkin</td><td>Seat</td></tr>
+	{% for row in int_ring %}
+		<tr>
+			<td>{{ row.0 }}</td>
+			<td>&nbsp;&nbsp;&nbsp;</td>
+			<td width="100%">&nbsp;&nbsp;&nbsp;</td>
+		</tr>
+	{% endfor %}
+	</table>
+{% endif %}
+
+
+
+
+{% if jr_ring %}
+	<!-- Build both the judging and gate sheets -->
+
+	<!-- Ring Sheet -->
+	<p class="breakhere">Judging - Class: JUNIOR SPLIT {{ cls.Name }}</p>
+	<table border="1" cellpadding="2" cellspacing="0" width="100%">
+		<tr><td>Number</td><td>Placing</td><td>Danish</td><td>Comments</td></tr>
+    {% for row in jr_ring %}
+		<tr>
+			<td>{{ row.0 }}</td>
+			<td>&nbsp;&nbsp;&nbsp;</td>
+			<td>&nbsp;&nbsp;&nbsp;</td>
+			<td width="100%">&nbsp;</td>
+		</tr>
+    {% endfor %}
+	</table>
+
+	<!-- In Gate Sheet -->
+	<p class="breakhere">In Gate - Class: JUNIOR SPLIT {{ cls.Name }}</p>
+	<table border="1" cellpadding="2" cellspacing="0" width="100%">
+		<tr><td>Number</td><td>Checkin</td><td>Seat</td></tr>
+	{% for row in jr_ring %}
+		<tr>
+			<td>{{ row.0 }}</td>
+			<td>&nbsp;&nbsp;&nbsp;</td>
+			<td width="100%">&nbsp;&nbsp;&nbsp;</td>
+		</tr>
+	{% endfor %}
+	</table>
+{% endif %}
+
+
+
+{% if announcer %}
+	<!-- Announcer Sheet -->
+	<p class="breakhere">Announcer - Class: SPLIT {{ cls.Name }}</p>
+	<table border="1" cellpadding="2" cellspacing="0" width="100%">
+		<tr><td>Number</td><td>Riders Name</td><td>Division</td><td>Horses Name</td><td>Club</td></tr>
+	{% for row in announcer %}
+		<tr>
+			<td>{{ row.0 }}</td>
+			<td>{{ row.1 }} {{ row.2 }}</td>
+			<td>{{ row.4 }}</td>
+			<td>{{ row.3 }}</td>
+			<td>{{ row.5 }}</td>
+		</tr>
+	{% endfor %}
+	</table>
+{% endif %}
+
+</div>
+</body>
+</html>

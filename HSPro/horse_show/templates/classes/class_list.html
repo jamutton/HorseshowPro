@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Class List{% endblock %}
+{% block content %}
+<div class="panel panel-default">
+  <div class="panel-heading">Class Schedule</div>
+  <div class="panel-body">
+    {% if object_list %}
+      <div class="table-responsive form-group has-feedback">
+      <input type="text" id="classTableFilter" onkeyup="filterTable()" class="form-control" placeholder="filter...">
+      <i class="glyphicon glyphicon-search form-control-feedback"></i>
+      <table class="table table-striped" id="classTableData">
+        <tr>
+          <th>Position</th>
+          <th>ClassID</th>
+          <th>Class Name</th>
+          <th colspan="2" class="text-center">Commands</th>
+        </tr>
+        {% for cs in object_list %}
+        <tr>
+          <td>{{ cs.ShowPosition }}</td>
+          <td>{{ cs.ShowClass.id }}</td>
+          <td width="80%">{{ cs.ShowClass.Name }}</td>
+          <td><a class="btn btn-warning btn-xs" href="/HSPro/{{ show.id }}/classes/{{ cs.ShowClass.id }}/print_split/"><span class="glyphicon glyphicon-print"></span> Print Split Class Sheets</a></td>
+          <td><a class="btn btn-primary btn-xs" href="/HSPro/{{ show.id }}/classes/{{ cs.ShowClass.id }}/print/"><span class="glyphicon glyphicon-print"></span> Print Class Sheets</a></td>
+        </tr>
+        {% endfor %}
+      </div>
+    {% else %}
+    	<p>No Class Schedule has been defined. Please use the admin site to setup a class schedule for this show.</p>
+    {% endif %}
+  </div>
+</div>
+<script>
+function filterTable() {
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("classTableFilter");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("classTableData");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[2];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
+{% include "../includes/class_modals.include.html" %}
+
+{% endblock %}

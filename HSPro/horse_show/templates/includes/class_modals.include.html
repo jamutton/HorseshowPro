@@ -1,0 +1,102 @@
+<!-- Modal Class Selector -->
+<div class="modal fade" tabindex="-1" role="dialog" id="classModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Select a class to print</h4>
+      </div>
+      <div class="modal-body">
+        <div class="show-selector">Please Enter a Class ID: <input type="text" id="print_class_selector"><br/>
+          <a class="btn btn-warning btn-xs showClass-selector" href="#" id="print_split"><span class="glyphicon glyphicon-print"></span> Print Split Class Sheets</a>
+          <a class="btn btn-primary btn-xs showClass-selector" href="#" id="print"><span class="glyphicon glyphicon-print"></span> Print Class Sheets</a>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script>
+$('a.showClass-selector').click( function(e) {
+  e.preventDefault();
+  window.location='/HSPro/{{ show.id }}/classes/'+$('#print_class_selector').val()+'/'+this.id+'/';
+  return false;
+});
+</script>
+<!-- /Modal Class selector -->
+
+
+<!-- Modal CSV Upload -->
+<div class="modal fade" tabindex="-1" role="dialog" id="csvUploadModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Import CSV of Show Entries</h4>
+      </div>
+      <div class="modal-body" id="csvModalBody">
+        <div class="show-selector">
+          <p>Paste your CSV here:<br/>
+          <textarea class="form-control" rows="5" id="csvImportTextArea"></textarea></p>
+          <p>Or upload:<br/>
+          <label class="btn btn-default btn-file">
+            Browse <input type="file" class="hidden">
+          </label>
+          <a class="btn btn-warning btn-xs" href="#" id="importCSV"><span class="glyphicon glyphicon-save"></span> Import</a>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script>
+$('#importCSV').click( function(e) {
+  e.preventDefault();
+  submitCSV($('#csvImportTextArea'), {{ show.id }});
+  return false;
+});
+</script>
+<!-- /Modal CSV Upload -->
+
+
+<!-- Modal Rider Welcome Selector -->
+<div class="modal fade" tabindex="-1" role="dialog" id="riderWelcomeModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Print Rider Checkin/Welcome Sheet</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group has-feedback">
+          <input type="text" id="print-rider-welcome-selector" class="form-control" placeholder="Please Enter a Rider Number...">
+          <i class="glyphicon glyphicon-search form-control-feedback"></i><br/>
+          <a class="btn btn-warning btn-xs showClass-selector" href="#" id="printRiderWelcome"><span class="glyphicon glyphicon-print"></span> Generate Rider Welcome Sheet</a>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script>
+$('#printRiderWelcome').click( function(e) {
+  e.preventDefault();
+  window.location.assign('/HSPro/{{ show.id }}/riders/'+$("#print-rider-welcome-selector").val()+'/welcome/')
+  return false;
+});
+jQuery(document).ready(function($) {
+  $('#riderWelcomeModal').on('shown.bs.modal', function() {
+     $('#print-rider-welcome-selector').focus();
+     $("#print-rider-welcome-selector").on("keydown", function(e) {
+       if(e.keyCode == 13) $("#printRiderWelcome").click()
+     });
+  })
+});
+</script>
+<!-- /Modal Rider Welcome Selector -->

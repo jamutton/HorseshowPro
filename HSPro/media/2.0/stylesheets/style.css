@@ -1,0 +1,76 @@
+html,body {
+height:100%;
+}
+
+body {
+  padding: 70px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-image: url('/media/2.0/images/background.jpg');
+  background-repeat:no-repeat;
+  display: compact;
+}
+
+a {
+  color: #00B7FF;
+}
+
+#wrap {
+  min-height: 100%;
+}
+
+.rbcontent {
+  overflow:auto;
+  padding-bottom:60px; /* this needs to be bigger than footer height*/
+}
+
+/* Modal notice */
+.item-selector{
+  display: inline-block;
+  font-size: 14px;
+  text-align: left;
+  background-color: #eee;
+  height: 40px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.2);
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+  margin-bottom: 10px;
+}
+.item-selector:hover{
+  cursor: pointer;
+  -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.4);
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,.3);
+}
+.item-selector > .itemsel-split{
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  background: #337ab7;
+  width: 33px;
+  float: left;
+  color: #fff!important;
+  height: 100%;
+  text-align: center;
+}
+.item-selector > .itemsel-split > .glyphicon{
+  position:relative;
+  top: calc(50% - 9px)!important; /* 50% - 3/4 of icon height */
+}
+.item-selector > .itemsel-split.itemsel-info{
+  background: #5bc0de!important;
+}
+.item-selector > .itemsel-text{
+  color: #000;
+  line-height: 19px;
+  padding-top: 11px;
+  padding-left: 45px;
+  padding-right: 20px;
+}
+
+.errorMessage {
+  color: red;
+}
+
+.footer {
+  color:#444;
+  padding: 10px;
+  font-size: 11px;
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="author" content="James Mutton">
+  <title>{% block title %}Printing Class Documents{% endblock %}</title>
+  <!-- Bootstrap -->
+  <link href="/media/2.0/bootstrap/css/bootstrap.min.css" rel="stylesheet"></link>
+</head>
+<body style="font-family:Verdana,Arial,serif;">
+<div>
+	<p><a href="javascript:history.go(-1);">back</a></p>
+{% if data %}
+	<!-- This is a simple printable table for the rider to take and reference -->
+  <!-- Welcome rider -->
+  <!--
+  {{data.show.Date}}
+  -->
+	<p>Rider Sheet for {{ data.show.Date }} - {{ data.show.Name }}</p>
+	<table class="table table-bordered">
+		<tr>
+      <td>Rider Name:</td>
+      <td colspan="5">{{ data.number.Rider.FirstName }} {{ data.number.Rider.LastName }}</td>
+    </tr>
+    <tr>
+      <td>Number:</td>
+      <td colspan="5">{{ data.number.pk }}</td>
+    </tr>
+    <tr>
+      <td>Horse's Name:</td>
+      <td colspan="5">{{ data.number.HorseName }}</td>
+    </tr>
+    <tr>
+      <th>Class #</th>
+      <th>Class Name</th>
+      <th>Seat</th>
+      <th>Highpoint</th>
+      <th>Medals</th>
+      <th>State</th>
+    </tr>
+    {% for entry in data.classEntries %}
+		<tr>
+			<td>{{ entry.Position }}</td>
+			<td width="50%">{{ entry.ShowClass.Name }}</td>
+      <td>{{ entry.ShowClass.Seat.Name }}</td>
+      <td>{% if entry.ShowClass.isHighpoint %}<span class="glyphicon glyphicon-ok"></span>{% else %}<span class="glyphicon glyphicon-remove"></span>{% endif %}</td>
+      <td>{% if entry.ShowClass.isMedalsQualifying %}<span class="glyphicon glyphicon-ok"></span>{% else %}<span class="glyphicon glyphicon-remove"></span>{% endif %}</td>
+      <td>{% if entry.ShowClass.isStateQualifying %}<span class="glyphicon glyphicon-ok"></span>{% else %}<span class="glyphicon glyphicon-remove"></span>{% endif %}</td>
+		</tr>
+    {% endfor %}
+    <tr>
+      <td>&nbsp;</td>
+			<td >&nbsp;</td>
+      <td>&nbsp;</td>
+			<td >&nbsp;</td>
+      <td>&nbsp;</td>
+			<td >&nbsp;</td>
+		</tr>
+    <tr>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+      <td>&nbsp;</td>
+			<td >&nbsp;</td>
+      <td>&nbsp;</td>
+			<td >&nbsp;</td>
+		</tr>
+    <tr>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+      <td>&nbsp;</td>
+			<td >&nbsp;</td>
+      <td>&nbsp;</td>
+			<td >&nbsp;</td>
+		</tr>
+    <tr>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+      <td>&nbsp;</td>
+			<td >&nbsp;</td>
+      <td>&nbsp;</td>
+			<td >&nbsp;</td>
+		</tr>
+	</table>
+{% endif %}
+</div>
+</body>
+</html>
