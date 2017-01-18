@@ -25,7 +25,20 @@ A lot of reporting functionality was removed from this version just to streamlin
 * Web-based (or external display) Highpoint leaderboard
 * year/year comparasion reports
 
-#
+# Setup
+## Prerequisites
+* Python 2.7 (setuptools, django)
+* sqlite3 libraries for your platform
+* memcached installed and running on the default port on localhost
+* clone the repo
+* cd to the repo directory
+* this will create the database in the "data" directory
+  * python manage.py migrate
+  * python manage.py makemigrations horse_show
+  * python manage.py migrate
+* Now you need to prepopulate the database with some standard settings/model-data.  cd to the "data" directory.
+* sqlite3 show.db
+  * .read loaddata
 
 ## Troubleshooting
 * read the code...
