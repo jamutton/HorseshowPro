@@ -108,7 +108,7 @@ def print_rider_sheet(request, show_id, ridernum):
     for clsEntry in classEntries:
         sched = clsEntry.ShowClass.showclassschedule_set.filter(Show=show)
         if len(sched) > 0:
-            clsEntry.Position = sched[0].ShowPosition
+            clsEntry.Position = sched[0].ClassNumber or sched[0].ShowPosition
     return render(request, 'rider_welcome.html', context={'data':{'number':number,
                                                                   'show':show,
                                                                   'classEntries':classEntries}})
