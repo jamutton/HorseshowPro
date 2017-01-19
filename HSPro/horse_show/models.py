@@ -91,7 +91,8 @@ class Rider(models.Model):
     Novice = models.BooleanField()
     Club = models.ForeignKey('Club')
     HighpointTeam = models.ForeignKey('HighpointTeam', blank=True, null=True)
-    Division = models.CharField(max_length=24, choices=DIVISION_CHOICES)
+    Division = Division = models.ForeignKey('Division')
+    #Division = models.CharField(max_length=24, choices=DIVISION_CHOICES)
     def __unicode__(self):
         return self.LastName + ", " + self.FirstName + " " + self.MiddleInitial
 
@@ -120,7 +121,8 @@ class ShowClass(models.Model):
     Name = models.CharField(max_length=48)
     Seat = models.ForeignKey('Seat')
     FormName = models.CharField(max_length=64, blank=True, null=True, verbose_name="text to match with entry form")
-    Division = models.CharField(max_length=24, choices=DIVISION_CHOICES, blank=True)
+    Division = models.ForeignKey('Division')
+    #Division = models.CharField(max_length=24, choices=DIVISION_CHOICES, blank=True)
     isHighpoint = models.BooleanField(default=True, verbose_name="counts toward highpoint")
     isTrail = models.BooleanField(default=False, verbose_name="scored as trail")
     isMedals = models.BooleanField(default=False, verbose_name="scored as medals")
@@ -214,6 +216,10 @@ class ClassEntry(models.Model):
         show = self.Entry.Show
         if len(ShowClassSchedule.objects.filter(Show=show, ShowClass=self.ShowClass)) == 0:
             raise ValidationError("Attempt to add entry for show that was not scheduled")
+        if self.ShowClass.Division and \
+                    self.ShowClass.Division.Exclusivity and \
+                    self.Entry.Number.Rider.Division != self.ShowClass.Division:
+            raise ValidationError("Rider division differs from class division")
         #clsEntry = ClassEntry.objects.filter(name=self.name)
         #class ShowClassSchedule(models.Model):
         #    ShowClass = models.ForeignKey('ShowClass')

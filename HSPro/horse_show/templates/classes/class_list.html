@@ -19,7 +19,7 @@
         <tr>
           <td>{{ cs.ShowPosition }}</td>
           <td>{{ cs.ShowClass.id }}</td>
-          <td width="80%">{{ cs.ShowClass.Name }}</td>
+          <td width="80%">{{ cs.ShowClass.Name }} - {{ cs.ShowClass.Seat }} - {{ cs.ShowClass.Division }}</td>
           <td><a class="btn btn-warning btn-xs" href="/HSPro/{{ show.id }}/classes/{{ cs.ShowClass.id }}/print_split/"><span class="glyphicon glyphicon-print"></span> Print Split Class Sheets</a></td>
           <td><a class="btn btn-primary btn-xs" href="/HSPro/{{ show.id }}/classes/{{ cs.ShowClass.id }}/print/"><span class="glyphicon glyphicon-print"></span> Print Class Sheets</a></td>
         </tr>
