@@ -95,7 +95,7 @@ class Rider(models.Model):
     Division = Division = models.ForeignKey('Division')
     #Division = models.CharField(max_length=24, choices=DIVISION_CHOICES)
     def __unicode__(self):
-        return self.LastName + ", " + self.FirstName + " " + self.MiddleInitial
+        return self.LastName + ", " + self.FirstName + " " + str(self.MiddleInitial)
 
 class RiderAttributes(models.Model):
     '''Defines additional attribute flags that can be assigned to a rider'''

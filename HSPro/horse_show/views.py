@@ -183,8 +183,6 @@ def csv_import(request, show_id):
                     Division = riderDivision,
                 )
                 (classEntry, _entryAdded) = ClassEntry.objects.get_or_create(Entry = entry, ShowClass = klass, EntryType = importedEntryType)
-                if _entryAdded:
-                    print "Creating Class-entry:"+klassName
             # medals
             data["added"].append(row)
         except StrangeError():
