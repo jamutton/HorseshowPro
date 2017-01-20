@@ -40,7 +40,7 @@ function render_show_list(element) {
 
 function submitCSV(myData, showid) {
   var mySuccess = function(data) {
-    $('#csvModalBody').html('<div class="alert alert-success" role="alert"><strong>' + data + '</strong></div>');
+    $('#csvModalBody').html('<div class="alert alert-success" role="alert"><strong>' + JSON.stringify(data) + '</strong></div>');
   };
   var myError = function(jqXHR, textStatus, errorThrown) {
     $('#csvModalBody').html('<div class="alert alert-danger" role="alert">Unable to complete import.  The error was: <strong>' + errorThrown + '</strong></div>');
