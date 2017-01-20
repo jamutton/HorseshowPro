@@ -2,6 +2,7 @@ from django.template import Context
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_http_methods
+from django.contrib.admin.views.decorators import staff_member_required
 from django.db import connection
 from django.core import serializers
 from horse_show.models import Show, ShowClass, ShowClassSchedule, Number, Rider, Entry, ClassEntry,\
@@ -143,6 +144,7 @@ def api_show(request, show_id):
     return HttpResponse(data)
 
 @require_http_methods(["POST"])
+@staff_member_required
 def csv_import(request, show_id):
     #parse csv data
     csvData = csv.DictReader(StringIO.StringIO(request.body))
