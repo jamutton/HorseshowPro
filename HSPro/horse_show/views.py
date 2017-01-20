@@ -1,10 +1,12 @@
 from django.template import Context
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.db import connection
 from django.core import serializers
-from horse_show.models import Show, ShowClass, ShowClassSchedule, Number, Rider, Entry, ClassEntry
+from horse_show.models import Show, ShowClass, ShowClassSchedule, Number, Rider, Entry, ClassEntry,\
+                              EntryType, Division, Club
+import csv, sqlite3, json, StringIO
 
 @require_http_methods(["GET"])
 def index(request, show_id=None):
@@ -139,3 +141,55 @@ def api_show(request, show_id):
     json_serializer.serialize(Show.objects.filter(pk=show_id))
     data = json_serializer.getvalue()
     return HttpResponse(data)
+
+@require_http_methods(["POST"])
+def csv_import(request, show_id):
+    #parse csv data
+    csvData = csv.DictReader(StringIO.StringIO(request.body))
+    show = Show.objects.get(id = show_id)
+    (importedEntryType, _) = EntryType.objects.get_or_create(Name="imported")
+    data = {"added":[], "failed":[]}
+    for row in csvData:
+        try:
+            # Create/Get the Rider
+            riderDivision = Division.objects.get(Division=row["Age division"])
+            (rider, created) = Rider.objects.get_or_create(
+                FirstName = row["Riders first name"],
+                LastName = row["Riders last name"],
+                Division = riderDivision,
+                Club = Club.objects.get(Name=row["Club"]),
+                defaults = {
+                    "EmailAddress":row["Contact Email"],
+                    "PhoneNumber":row["Contact Phone Number"],
+                },
+            )
+            if created:
+                number = Number(
+                    Number = row["Riders number"],
+                    Rider = rider,
+                    HorseName = row["Horses name"]
+                )
+                number.save()
+            else:
+                # the rider exists so the number should or we run the risk of cross contaminating
+                number = Number.objects.get(Number = row["Riders number"], Rider = rider)
+            # now create an entry and assign some class-entries to it
+            (entry, _) = Entry.objects.get_or_create(Number = number, Show = show)
+            #entry.save()
+            #"Showmanship;Saddle Seat Eq;Hunt Seat Eq or English Eq;Discipline Rail English;Bareback Eq"
+            for klassName in row["Performance classes"].split(";"):
+                klass = ShowClass.objects.get(
+                    FormName = klassName,
+                    Division = riderDivision,
+                )
+                (classEntry, _entryAdded) = ClassEntry.objects.get_or_create(Entry = entry, ShowClass = klass, EntryType = importedEntryType)
+                if _entryAdded:
+                    print "Creating Class-entry:"+klassName
+            # medals
+            data["added"].append(row)
+        except StrangeError():
+            data["failed"].append(row)
+    return JsonResponse(data)
+
+class StrangeError(Exception):
+    pass

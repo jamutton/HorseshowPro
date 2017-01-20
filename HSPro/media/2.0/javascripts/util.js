@@ -1,3 +1,15 @@
+function csrfSafeMethod(method) {
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+var csrftoken = Cookies.get('csrftoken');
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+
 function render_show_list(element) {
   var mySuccess = function( data ) {
     var templateEntry = $('#showModalSample').clone();
@@ -26,14 +38,16 @@ function render_show_list(element) {
   });
 }
 
-function submitCSV(element, showid, myData) {
+function submitCSV(myData, showid) {
   var mySuccess = function(data) {
-
+    $('#csvModalBody').html('<div class="alert alert-success" role="alert"><strong>' + data + '</strong></div>');
   };
   var myError = function(jqXHR, textStatus, errorThrown) {
     $('#csvModalBody').html('<div class="alert alert-danger" role="alert">Unable to complete import.  The error was: <strong>' + errorThrown + '</strong></div>');
   };
+
   $.ajax({
+    contentType: "text/csv",
     dataType: "json",
     url: '/HSPro/shows/'+ showid + '/entryimport/',
     type: "POST",

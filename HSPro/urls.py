@@ -21,4 +21,5 @@ urlpatterns = [
 
     url(r'^HSPro/shows/json/$', views.api_get_shows),
     url(r'^HSPro/shows/(?P<show_id>[0-9]+)/json/$', views.api_show),
+    url(r'^HSPro/shows/(?P<show_id>[0-9]+)/entryimport/$', views.csv_import),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

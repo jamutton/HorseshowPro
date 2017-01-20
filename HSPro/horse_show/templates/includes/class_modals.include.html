@@ -56,9 +56,12 @@ $('a.showClass-selector').click( function(e) {
 <script>
 $('#importCSV').click( function(e) {
   e.preventDefault();
-  submitCSV($('#csvImportTextArea'), {{ show.id }});
+  submitCSV($('#csvImportTextArea').val(), {{ show.id }});
   return false;
 });
+$('#csvUploadModal').on('hidden.bs.modal', function() {
+  //@TODO Reset the modal here to a text area
+})
 </script>
 <!-- /Modal CSV Upload -->
 
