@@ -37,9 +37,10 @@ First you need to setup the code
 * clone the repo
 * cd to the repo directory
 * this will create the database in the "data" directory
-  * python manage.py migrate
-  * python manage.py makemigrations horse_show
-  * python manage.py migrate
+  * `python manage.py migrate`
+  * `python manage.py makemigrations horse_show`
+  * `python manage.py migrate`
+  * or in just one line you can simply put `python manage.py migrate && python manage.py makemigrations horse_show && python manage.py migrate`
 
 Next you need to create a superuser.  This is the initial user that has access to everything so choose a password appropriately and all that stuff.  To create a user, you'll use python-Django's tools for populating the database with an initial model.  Enter the following into the command window:
 ~~~~
@@ -55,6 +56,7 @@ Now you need to prepopulate the database with some standard settings/model-data.
 ~~~~
 sqlite3 show.db
 sqlite> .read loaddata
+sqlite> .q
 ~~~~
 
 Lastly, you need to start the python-Django server.  To do that type `python manage.py runserver` into your command prompt. If you want to access it over a wireless network or from a tablet, use this instead `python manage.py runserver 0.0.0.0:8000` and it will listen on all interfaces.
@@ -96,84 +98,22 @@ You should periodically copy the show.db file to a backup while the service is n
 * If you're getting an error in the console about the database, you may have a corrupt database.  Might have to work from a backup.
 
 ## Contact
-* Don't... I really only do this for the benefit of my sister.  Maybe someday I'll make it so the sql doesn't suck and do something about the drunken JS but it is not this day.  If you can get my sister to ask me then maybe...
+* _Don't..._ I really only do this for the benefit of my sister.  Maybe someday I'll make it so the sql doesn't suck and do something about the drunken JS but it is not this day.  If you can get my sister to ask me then maybe...
 
-# Importing data
-Typically, after setup, there will be two stages of data import, initial bootstrapping followed by operational entry.  For bootstrapping, the loaddata SQL command script is used after Django sets up its database as described in the Setup section.  Ongoing operational entry can be either via the Django administrator or in bulk, through CSV.
+# Input CSV specification
+Typically, horse show entries have been mailed and/or phoned in but by using Google forms or some other means of online entry, the process can be streamlined. Whatever service used, the output must be exportable to CSV and the export must include a header row matching the following fields.  Other fields may be present based on what you want to collect from the rider entry, but the list below is what will be extracted and imported.
+* "Riders first name",
+* "Riders last name",
+* "Riders number",
+* "Horses name",
+* "Contact Email",
+* "Contact Phone Number",
+* "Age division",
+* "Club",
+* "Performance classes",
 
-## Input CSV
-Typically, horse show entries have been mailed and/or phoned in but by using Google forms or some other means of online entry, the process can be streamlined. Whatever service used, the output must be exportable to CSV.  We define the following fields in the import (enum-options are based on related tables)
-* RidersName (first last)
-* RidersNumber
-* HorsesName
-* ContactEmail
-* ContactPhone
-* AgeDivision (_enum_)
-  * Junior
-  * Intermediate
-  * Senior
-* RidingDivision (_enum_)
-  * novice
-  * greenhorse
-  * regular
-* Club (_enum from club primary keys_)
-  * Barn Buddies
-  * Classic Riders
-  * Evergreen Equestrians
-  * Golden Horseshoes
-  * Happy Hayburners
-  * Lucky Horseshoes
-  * Mounted Mischief
-  * Mt Si Riderz
-  * Vashon Rock Riders
-  * Thunder Rail
-  * other... (how does this get captured)
-* Volunteer Jobs (_should these be captured to some kind of text field associated with the rider?_)
-  * Showmanship and Western ingate, Ring steward, scribe, Announcer
-  * Trail and Driving - in gate, scribe, set up/take down, trail manager, ring steward
-  * Bareback and English classes- in gate, announcer, scribe, ring steward, pooper scooper and trash pickup
-  * Over Fences/Dressage - In gate, scribe, warm up arena attendant, pole setter, pooper scooper and trash pickup, ribbon table, set up/take down
-  * OTHER:
-* Performance Classes:
-  * showmanship
-  * Saddle Seat eq
-  * Hunt seat/english eq
-  * Discipline Rail english
-  * Bareback Eq
-  * Discipline Rail Western
-  * Stock seat eq
-  * trail
-* Performance Medals:
-  * showmanship
-  * Hunt Seat
-  * Saddle Seat
-  * Stock Seat
-  * Trail
-* Electronic Signature of Parent/Guardian : __BOOL__
-* Name of Parent/Guardian : __STRING__
-* Electronic Signature of Rider : __BOOL__
-* Name of rider agreeing to statement : __STRING__
+The `Performance classes` field should be a semi-colon delimited list of classes that will match on the form field `Text to match with entry form` that you setup when defining your classes in the Admin.  Here's an example:
 
+    "Showmanship;Saddle Seat Eq;Hunt Seat Eq or English Eq;Discipline Rail English;Bareback Eq"
 
-
-CSV:
-0-Timestamp,
-1-Riders name,
-2-Riders number,
-3-Horses name,
-4-Contact Email,
-5-Contact Phone Number,
-6-Age division,
-7-Riding Division,
-8-Club,
-9-Volunteer jobs: Where I would like to help out,
-10-Performance classes,
-11-Performance Medals [Showmanship],
-12-Performance Medals [Hunt Seat],
-13-Performance Medals [Saddle Seat],
-14-Performance Medals [Stock Seat],
-15-Performance Medals [Trail],
-16-Electronic Signature of Parent or Guardian,
-17-Name of Parent or Guardian responsible for rider at event,
-18-Electronic Signature of Rider,
-19-Name of rider agreeing to statement
+The division for each class will be taken from the riders division field (which is why one does not need to include the division in the class name.)
